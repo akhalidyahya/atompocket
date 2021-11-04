@@ -37,7 +37,7 @@
                     <a href="{{route('masterData.wallet.index')}}">Dompet</a>
                 </li>
                 <li class="{{@$sidebar == 'category' ? 'active': ''}}">
-                    <a href="{{route('masterData.wallet.index')}}">Kategori</a>
+                    <a href="{{route('masterData.category.index')}}">Kategori</a>
                 </li>
             </ul>
         </li>

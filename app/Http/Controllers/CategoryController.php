@@ -2,42 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Wallet;
+use App\Models\Category;
 use App\Utils\Constant;
 use Illuminate\Http\Request;
 use DataTables;
 
-class WalletController extends Controller
+class CategoryController extends Controller
 {
     public function index()
     {
-        $data['sidebar'] = 'wallet';
-        return view('pages.master.wallet',$data);
+        $data['sidebar'] = 'category';
+        return view('pages.master.category',$data);
     }
 
     public function add()
     {
-        $data['sidebar'] = 'wallet';
+        $data['sidebar'] = 'category';
         $data['title']   = 'Tambah';
-        $data['model']   = Wallet::class;
+        $data['model']   = Category::class;
         $data['mode']    = '';
-        return view('pages.master.detail-wallet',$data);
+        return view('pages.master.detail-category',$data);
     }
 
     public function detail($id,$mode)
     {
-        $data['sidebar'] = 'wallet';
+        $data['sidebar'] = 'category';
         $data['title']   = Constant::COMMON_MODE_LIST[$mode];
-        $data['model']   = Wallet::find($id);
+        $data['model']   = Category::find($id);
         $data['mode']    = $mode;
         if(empty($data['model']) || !in_array($mode,[Constant::COMMON_MODE_EDIT,Constant::COMMON_MODE_DETAIL])) {
             abort(404);
         }
-        return view('pages.master.detail-wallet',$data);
+        return view('pages.master.detail-category',$data);
     }
 
     /**
-     * Store or update the data (based on wheter or not id wallet exist)
+     * Store or update the data (based on wheter or not id category exist)
      * @param Request
      * @return flash session
      */
@@ -45,19 +45,18 @@ class WalletController extends Controller
     {
         
         if($request->has('id') && !empty($request->id)) {
-            $wallet = Wallet::find($request->id);
+            $category = Category::find($request->id);
         } else {
-            $wallet = new Wallet();            
+            $category = new Category();            
         }
-        $wallet->name               = $request->name;
-        $wallet->reference          = $request->reference;
-        $wallet->description        = $request->description;
-        $wallet->wallet_status_id   = $request->wallet_status_id;
+        $category->name           = $request->name;
+        $category->description    = $request->description;
+        $category->status_id      = $request->status_id;
 
-        if($wallet->save()) {
-            return redirect()->route('masterData.wallet.index')->with(['success'=>'Data berhasil disimpan!']);
+        if($category->save()) {
+            return redirect()->route('masterData.category.index')->with(['success'=>'Data berhasil disimpan!']);
         } else {
-            return redirect()->route('masterData.wallet.index')->with(['error'=>'Data gagal disimpan!']);
+            return redirect()->route('masterData.category.index')->with(['error'=>'Data gagal disimpan!']);
         }
     }
 
@@ -68,11 +67,11 @@ class WalletController extends Controller
      */
     public function getDataTable(Request $request)
     {
-        $datas = Wallet::query();
-        $datas->with('walletStatus');
+        $datas = Category::query();
+        $datas->with('categoryStatus');
 
         if($request->has('status') && !empty($request->status)) {
-            $datas->where('wallet_status_id',$request->status);
+            $datas->where('status_id',$request->status);
         }
 
         $datas->get();
@@ -80,11 +79,11 @@ class WalletController extends Controller
         return DataTables::of($datas)
             ->addIndexColumn()
             ->addColumn('status',function($data){
-                return $data->walletStatus->name;
+                return $data->categoryStatus->name;
             })
             ->addColumn('action', function ($data) {
                 $statusBtn = '<li><a onclick="changeStatus('.$data->id.' , \' '. 1 .' \')" href="javascript:void(0);"><i class="fa fa-check"></i> Aktif</a></li>';
-                if($data->wallet_status_id == 1) {
+                if($data->status_id == 1) {
                     $statusBtn = '<li><a onclick="changeStatus('.$data->id.' , \' '. 2 .' \')" href="javascript:void(0);"><i class="fa fa-times"></i> Tidak Aktif</a></li>';
                 }
                 return '<div class="btn-group">
@@ -92,8 +91,8 @@ class WalletController extends Controller
                                 Manage <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                            <li><a href="'.route('masterData.wallet.detail',['id'=>$data->id,'mode'=>Constant::COMMON_MODE_DETAIL]).'"><i class="fa fa-search"></i> Detail</a></li>
-                            <li><a href="'.route('masterData.wallet.detail',['id'=>$data->id,'mode'=>Constant::COMMON_MODE_EDIT]).'"><i class="fa fa-edit"></i> Edit</a></li>
+                            <li><a href="'.route('masterData.category.detail',['id'=>$data->id,'mode'=>Constant::COMMON_MODE_DETAIL]).'"><i class="fa fa-search"></i> Detail</a></li>
+                            <li><a href="'.route('masterData.category.detail',['id'=>$data->id,'mode'=>Constant::COMMON_MODE_EDIT]).'"><i class="fa fa-edit"></i> Edit</a></li>
                             '.$statusBtn.'
                             </ul>
                         </div>';
@@ -102,15 +101,15 @@ class WalletController extends Controller
     }
 
     /**
-     * Change status of wallet
+     * Change status of category
      * @param Request
      * @return JSON
      */
     public function changeStatus($id, Request $request)
     {
-        $wallet = Wallet::find($id);
-        $wallet->wallet_status_id = $request->status;
-        if($wallet->save()) {
+        $category = Category::find($id);
+        $category->status_id = $request->status;
+        if($category->save()) {
             return response()->json(['success'=>true,'message'=>'Status berhasil diubah!']);
         } else {
             return response()->json(['success'=>false,'message'=>'Status berhasil diubah!']);

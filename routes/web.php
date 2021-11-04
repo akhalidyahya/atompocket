@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +20,21 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'master-data'], function () {
+    //wallet
     Route::get('/dompet',[WalletController::class,'index'])->name('masterData.wallet.index');
     Route::get('/dompet/add',[WalletController::class,'add'])->name('masterData.wallet.add');
     Route::get('/dompet/{id}/{mode}',[WalletController::class,'detail'])->name('masterData.wallet.detail');
     Route::post('/dompet',[WalletController::class,'save'])->name('masterData.wallet.save');
     Route::post('/dompet/change-status/{id}',[WalletController::class,'changeStatus'])->name('masterData.wallet.changeStatus');
     Route::get('/dompet/getDataTable',[WalletController::class,'getDataTable'])->name('masterData.wallet.getDataTable');
+
+    //category
+    Route::get('/kategori',[CategoryController::class,'index'])->name('masterData.category.index');
+    Route::get('/kategori/add',[CategoryController::class,'add'])->name('masterData.category.add');
+    Route::get('/kategori/{id}/{mode}',[CategoryController::class,'detail'])->name('masterData.category.detail');
+    Route::post('/kategori',[CategoryController::class,'save'])->name('masterData.category.save');
+    Route::post('/kategori/change-status/{id}',[CategoryController::class,'changeStatus'])->name('masterData.category.changeStatus');
+    Route::get('/kategori/getDataTable',[CategoryController::class,'getDataTable'])->name('masterData.category.getDataTable');
 });
 
 ?>
