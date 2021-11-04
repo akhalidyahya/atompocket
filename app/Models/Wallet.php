@@ -16,7 +16,7 @@ class Wallet extends Model
         'wallet_status_id'
     ];
     /**
-     * Get the user associated with the Wallet
+     * Get the data associated with the Wallet
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,5 +37,11 @@ Route::group(['prefix' => 'master-data'], function () {
     Route::post('/kategori/change-status/{id}',[CategoryController::class,'changeStatus'])->name('masterData.category.changeStatus');
     Route::get('/kategori/getDataTable',[CategoryController::class,'getDataTable'])->name('masterData.category.getDataTable');
 });
+
+//transaksi
+Route::get('/transaksi/{id}',[TransactionController::class,'index'])->where(['id'=>'[0-9]+'])->name('transaction.index');
+Route::get('/transaksi/add/{id}',[TransactionController::class,'add'])->where(['id'=>'[0-9]+'])->name('transaction.add');
+Route::post('/transaksi/{id}',[TransactionController::class,'save'])->where(['id'=>'[0-9]+'])->name('transaction.save');
+Route::get('/transaksi/getDataTable',[TransactionController::class,'getDataTable'])->name('transaction.getDataTable');
 
 ?>

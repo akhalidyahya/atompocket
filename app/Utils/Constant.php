@@ -8,6 +8,9 @@ class Constant {
         self::COMMON_MODE_EDIT     => 'Edit',
         self::COMMON_MODE_DETAIL   => 'Detail',
     ];
+
+    const COMMON_TRANSACTION_IN  = 'IN';
+    const COMMON_TRANSACTION_OUT = 'OUT';
 }
 
 ?>

@@ -83,7 +83,7 @@
             {data: 'name',name: 'name'},
             {data: 'reference',name: 'reference'},
             {data: 'description',name: 'description'},
-            {data: 'status',name: 'status'},
+            {data: 'status',name: 'status',searchable:false,orderable:false},
             {data: 'action',name: 'action',searchable:false,orderable:false},
         ],
         'info': true,

@@ -16,7 +16,7 @@ class Category extends Model
     ];
 
     /**
-     * Get the user associated with the Category
+     * Get the data associated with the Category
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

@@ -42,7 +42,7 @@
             </ul>
         </li>
         <?php 
-        $transaksi_menu = ['dompet_masuk','dompet_keluar'];
+        $transaksi_menu = ['wallet_in','wallet_out'];
         ?>
         <li class="@if(in_array(@$sidebar,$transaksi_menu)) active @endif">
             <a href="javascript:void(0);" class="menu-toggle @if(in_array(@$sidebar,$transaksi_menu)) toggled @endif">
@@ -50,15 +50,15 @@
                 <span>Transaksi</span>
             </a>
             <ul class="ml-menu">
-                <li class="{{@$sidebar == 'dompet_masuk' ? 'active': ''}}">
-                    <a href="{{route('masterData.wallet.index')}}">Dompet Masuk</a>
+                <li class="{{@$sidebar == 'wallet_in' ? 'active': ''}}">
+                    <a href="{{route('transaction.index',['id'=>1])}}">Dompet Masuk</a>
                 </li>
-                <li class="{{@$sidebar == 'dompet_keluar' ? 'active': ''}}">
-                    <a href="{{route('masterData.wallet.index')}}">Dompet Keluar</a>
+                <li class="{{@$sidebar == 'wallet_out' ? 'active': ''}}">
+                    <a href="{{route('transaction.index',['id'=>2])}}">Dompet Keluar</a>
                 </li>
             </ul>
         </li>
-        <li class="{{@$sidebar == 'laporan' ? 'active': ''}}">
+        <li class="{{@$sidebar == 'report' ? 'active': ''}}">
             <a href="{{}}">
                 <i class="material-icons">insert_chart</i>
                 <span>Laporan</span>

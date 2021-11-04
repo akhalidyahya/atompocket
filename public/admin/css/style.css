@@ -6,6 +6,9 @@
 .d-none {
   display: none;
 }
+.grey-mode {
+  background-color: #eee !important;
+}
 .navbar {
   font-family: "Roboto", sans-serif;
   -webkit-border-radius: 0;

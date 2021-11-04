@@ -1,5 +1,5 @@
 @extends('layouts.base')
-@section('title','Master Data Kategori')
+@section('title',$title)
 @push('customCSS')
 <link href="{{asset('admin/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css')}}" rel="stylesheet" />
 @endpush
@@ -13,15 +13,12 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Master Data Kategori <small>Manajemen master data kategori...</small>
+                        {{$title}}
                     </h2>
                 </div>
                 <div class="body">
                     <div class="text-right m-b-15">
-                        <button type="button" class="btn btn-primary waves-effect m-r-5" onclick="openFilter()">
-                            <i class="material-icons">filter_list</i>
-                        </button>
-                        <a href="{{route('masterData.category.add')}}" class="btn btn-primary waves-effect btn-icon m-r-5">
+                        <a href="{{route('transaction.add',['id'=>\Request::route('id')])}}" class="btn btn-primary waves-effect btn-icon m-r-5">
                             <i class="material-icons">add</i>
                             <span>Buat Baru</span>
                         </a>
@@ -45,10 +42,12 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Nama</th>
+                                    <th>Tanggal</th>
+                                    <th>Kode</th>
                                     <th>Deskripsi</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Kategori</th>
+                                    <th>Nilai</th>
+                                    <th>Dompet</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -68,9 +67,9 @@
         'processing': true,
         'serverSide': true,
         'ajax': {
-            'url': "{{ route('masterData.category.getDataTable') }}",
+            'url': "{{ route('transaction.getDataTable') }}",
             'data': function(d) {
-                d.status = $('#f_status').val();
+                d.status_id = '{{\Request::route("id")}}';
             }
         },
         'dataType': 'json',
@@ -79,10 +78,12 @@
         'responsive': true,
         'columns': [
             {data: 'DT_RowIndex',name: 'DT_RowIndex',searchable:false,orderable:false},
-            {data: 'name',name: 'name'},
+            {data: 'transaction_date',name: 'transaction_date'},
+            {data: 'transaction_code',name: 'transaction_code'},
             {data: 'description',name: 'description'},
-            {data: 'status',name: 'status',searchable:false,orderable:false},
-            {data: 'action',name: 'action',searchable:false,orderable:false},
+            {data: 'category',name: 'categories.name'},
+            {data: 'amount',name: 'amount'},
+            {data: 'wallet',name: 'wallets.name'},
         ],
         'info': true,
         'autoWidth': false
