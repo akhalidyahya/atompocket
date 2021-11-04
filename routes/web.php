@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 
 /*
@@ -17,7 +18,7 @@ use App\Http\Controllers\TransactionController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('masterData.wallet.index');
 });
 
 Route::group(['prefix' => 'master-data'], function () {
@@ -43,5 +44,9 @@ Route::get('/transaksi/{id}',[TransactionController::class,'index'])->where(['id
 Route::get('/transaksi/add/{id}',[TransactionController::class,'add'])->where(['id'=>'[0-9]+'])->name('transaction.add');
 Route::post('/transaksi/{id}',[TransactionController::class,'save'])->where(['id'=>'[0-9]+'])->name('transaction.save');
 Route::get('/transaksi/getDataTable',[TransactionController::class,'getDataTable'])->name('transaction.getDataTable');
+
+//laporan
+Route::get('/laporan',[ReportController::class,'index'])->name('report.index');
+Route::post('/laporan/hasil',[ReportController::class,'result'])->name('report.result');
 
 ?>

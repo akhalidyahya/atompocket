@@ -9,12 +9,18 @@ use DataTables;
 
 class WalletController extends Controller
 {
+    /**
+     * Index Dompet page
+     */
     public function index()
     {
         $data['sidebar'] = 'wallet';
         return view('pages.master.wallet',$data);
     }
 
+    /**
+     * Add Dompet page
+     */
     public function add()
     {
         $data['sidebar'] = 'wallet';
@@ -24,6 +30,10 @@ class WalletController extends Controller
         return view('pages.master.detail-wallet',$data);
     }
 
+    /**
+     * Detail (edit,detail) Dompet page
+     * @param id of the Dompet and mode (edit or detail)
+     */
     public function detail($id,$mode)
     {
         $data['sidebar'] = 'wallet';

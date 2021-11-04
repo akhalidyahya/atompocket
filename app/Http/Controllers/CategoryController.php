@@ -9,12 +9,18 @@ use DataTables;
 
 class CategoryController extends Controller
 {
+    /**
+     * Index Wallet page
+     */
     public function index()
     {
         $data['sidebar'] = 'category';
         return view('pages.master.category',$data);
     }
 
+    /**
+     * Add Wallet page
+     */
     public function add()
     {
         $data['sidebar'] = 'category';
@@ -24,6 +30,10 @@ class CategoryController extends Controller
         return view('pages.master.detail-category',$data);
     }
 
+    /**
+     * Detail (edit,detail) Wallet page
+     * @param id of the wallet and mode (edit or detail)
+     */
     public function detail($id,$mode)
     {
         $data['sidebar'] = 'category';

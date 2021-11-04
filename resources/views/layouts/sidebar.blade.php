@@ -59,7 +59,7 @@
             </ul>
         </li>
         <li class="{{@$sidebar == 'report' ? 'active': ''}}">
-            <a href="{{}}">
+            <a href="{{route('report.index')}}">
                 <i class="material-icons">insert_chart</i>
                 <span>Laporan</span>
             </a>

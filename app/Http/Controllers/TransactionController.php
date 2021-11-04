@@ -13,6 +13,10 @@ use DataTables;
 
 class TransactionController extends Controller
 {
+    /**
+     * Index Transaction page
+     * @param $id of transaction status
+     */
     public function index($id)
     {
         $transaction_type = TransactionStatus::find($id);
@@ -27,6 +31,10 @@ class TransactionController extends Controller
         return view('pages.transaction.index',$data);
     }
 
+    /**
+     * Add Transaction page
+     * @param $id of transaction status
+     */
     public function add($id)
     {
         $transaction_type = TransactionStatus::find($id);
@@ -43,6 +51,10 @@ class TransactionController extends Controller
         return view('pages.transaction.detail',$data);
     }
 
+    /**
+     * Detail (add,edit,detail) Transaction page
+     * @param $id of transaction status
+     */
     public function detail($id,$mode)
     {
         $data['sidebar'] = 'category';
