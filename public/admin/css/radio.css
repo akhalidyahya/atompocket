@@ -1,0 +1,111 @@
+@charset "UTF-8";
+.radio-section {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.radio-section>div {
+    flex: 1;
+    padding: 0.5rem;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+input[type=radio]:not(:disabled)~label {
+    cursor: pointer;
+}
+
+
+/* tabrakan sama materialize */
+
+[type="radio"]:not(:checked)+label:before,
+[type="radio"]:not(:checked)+label:after {
+    display: none;
+}
+
+[type="radio"]:checked+label::before {
+    display: none;
+}
+
+
+/* Tabrakan sama style.css */
+
+[type="radio"]:checked+label,
+[type="radio"]:not(:checked)+label {
+    padding-left: 5px !important;
+}
+
+input[type=radio]:disabled~label {
+    color: #5a5a5a;
+    border-color: #bcc2bf;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+label {
+    height: 100% !important;
+    display: block;
+    background: white;
+    border: 2px solid #1f91f3;
+    border-radius: 20px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    box-shadow: 0px 3px 10px -2px rgba(161, 170, 166, 0.5);
+    position: relative;
+    min-width: 100%;
+}
+
+input[type=radio]:checked+label {
+    background: #1f91f3;
+    color: white;
+    box-shadow: 0px 0px 20px rgba(44, 93, 255, 0.75);
+}
+
+.true-answer {
+    border: 2px solid #20df80 !important;
+    background: #20df80 !important;
+    color: white;
+    box-shadow: 0px 0px 20px rgba(0, 255, 128, 0.75) !important;
+}
+
+.wrong-answer {
+    border: 2px solid #df0606 !important;
+    background: rgb(197, 7, 7) !important;
+    color: white;
+    box-shadow: 0px 0px 20px rgba(245, 22, 6, 0.75) !important;
+}
+
+
+/* input[type=radio]:checked+label::after {
+    color: #3d3f43;
+    font-family: FontAwesome;
+    border: 2px solid #1f91f3;
+    content: "";
+    font-size: 24px;
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0px 2px 5px -2px rgba(0, 0, 0, 0.25);
+} */
+
+
+/* input[type=radio]#control_05:checked+label {
+    background: red;
+    border-color: red;
+} */
+
+@media only screen and (max-width: 700px) {
+    .radio-section {
+        flex-direction: column;
+    }
+}
