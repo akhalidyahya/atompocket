@@ -16,7 +16,7 @@
                 </div>
                 <div class="body">
                     <div class="row clearfix">
-                        <form method="POST" action="{{route('transaction.save',['id'=>\Request::route('id')])}}">
+                        <form id="transactionForm" method="POST" action="{{route('transaction.save',['id'=>\Request::route('id')])}}">
                             {{csrf_field()}}
                             <input type="hidden" name="transaction_id" value="{{@$model->id}}">
                             <input type="hidden" name="transaction_type" value="{{\Request::route('id')}}">
@@ -41,7 +41,7 @@
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="category_id">
                                         @foreach(\App\Helpers\SelectHelper::getCategories() as $data)
-                                        <option @if(@$model->category_id == $data->id) selected @endif value="{{$data->id}}">{{$data->name}}</option>
+                                        <option @if(@$model->category_id == $data->id || @old('category_id') == $data->id) selected @endif value="{{$data->id}}">{{$data->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -51,7 +51,7 @@
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="wallet_id">
                                         @foreach(\App\Helpers\SelectHelper::getWallets() as $data)
-                                        <option @if(@$model->wallet_id == $data->id) selected @endif value="{{$data->id}}">{{$data->name}}</option>
+                                        <option @if(@$model->wallet_id == $data->id || @old('wallet_id') == $data->id) selected @endif value="{{$data->id}}">{{$data->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -61,16 +61,22 @@
                                 <div class="form-group">
                                     <label for="">Nilai</label>
                                     <div class="form-line">
-                                        <input type="number" min="0" class="form-control" placeholder="Nilai" name="amount" value="{{@$model->amount}}" />
+                                        <input type="number" min="0" class="form-control" placeholder="Nilai" name="amount" value="{{!empty(old('amount')) ? old('amount') :@$model->amount}}" />
                                     </div>
+                                    @error('amount')
+                                    <div class="col-red">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Deskripsi</label>
                                     <div class="form-line">
-                                        <textarea type="text" class="form-control" placeholder="Deskripsi" name="description" >{{@$model->description}}</textarea>
+                                        <textarea type="text" class="form-control" placeholder="Deskripsi" name="description" >{{!empty(old('description')) ? old('description') : @$model->description}}</textarea>
                                     </div>
+                                    @error('description')
+                                    <div class="col-red">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             @if(@$mode == \App\Utils\Constant::COMMON_MODE_EDIT || @$mode == '')
@@ -87,7 +93,18 @@
 </div>
 @push('customJS')
 <script>
-
+$('#transactionForm').validate({
+    rules: {
+        amount: {
+            required: true,
+            number: true,
+            digits: true
+        },
+        description: {
+            maxlength: 100
+        }
+    }
+});
 </script>
 @endpush
 @endsection

@@ -19,6 +19,17 @@ class Transaction extends Model
         'status_id',
     ];
 
+    const FORM_VALIDATION = [
+        'amount'        => 'required|numeric',
+        'description'   => 'max:100',
+    ];
+
+    const VALIDATION_MESAGE = [
+        'amount.required'   => 'Nilai transaksi wajib diisi!',
+        'amount.numeric'    => 'Nilai transaksi harus berupa angka!',
+        'description.max'   => 'Deskripsi tidak boleh melebihi :max karakter!',
+    ];
+
     /**
      * Get the wallet that owns the Transaction
      *

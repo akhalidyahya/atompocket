@@ -6,6 +6,7 @@ use App\Models\Wallet;
 use App\Utils\Constant;
 use Illuminate\Http\Request;
 use DataTables;
+use Validator;
 
 class WalletController extends Controller
 {
@@ -53,7 +54,11 @@ class WalletController extends Controller
      */
     public function save(Request $request)
     {
-        
+        $validation = Validator::make($request->all(),Wallet::FORM_VALIDATION,Wallet::VALIDATION_MESAGE);
+        if($validation->fails()) {
+            return redirect()->route('masterData.wallet.add')->withErrors($validation)->withInput();
+        }
+
         if($request->has('id') && !empty($request->id)) {
             $wallet = Wallet::find($request->id);
         } else {

@@ -10,6 +10,7 @@ use App\Utils\Constant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;
+use Validator;
 
 class TransactionController extends Controller
 {
@@ -74,6 +75,11 @@ class TransactionController extends Controller
      */
     public function save(Request $request)
     {
+        $validation = Validator::make($request->all(),Transaction::FORM_VALIDATION,Transaction::VALIDATION_MESAGE);
+        if($validation->fails()) {
+            return redirect()->route('transaction.add',['id'=>$request->transaction_type])->withErrors($validation)->withInput();
+        }
+
         if($request->has('transaction_id') && !empty($request->transaction_id)) {
             $transaction = Transaction::find($request->transaction_id);
         } else {

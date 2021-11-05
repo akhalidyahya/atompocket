@@ -16,31 +16,37 @@
                 </div>
                 <div class="body">
                     <div class="row clearfix">
-                        <form method="POST" action="{{route('masterData.category.save')}}">
+                        <form id="categoryForm" method="POST" action="{{route('masterData.category.save')}}">
                             {{csrf_field()}}
                             <input type="hidden" name="id" value="{{@$model->id}}">
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="">Nama</label>
                                     <div class="form-line">
-                                        <input type="text" class="form-control" placeholder="Nama" name="name" value="{{@$model->name}}" />
+                                        <input type="text" class="form-control" placeholder="Nama" name="name" value="{{!empty(old('name')) ? old('name') : @$model->name}}" />
                                     </div>
+                                    @error('name')
+                                    <div class="col-red">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="">Deskrripsi</label>
+                                    <label for="">Deskripsi</label>
                                     <div class="form-line">
-                                        <textarea type="text" class="form-control" placeholder="Deskripsi" name="description" >{{@$model->description}}</textarea>
+                                        <textarea type="text" class="form-control" placeholder="Deskripsi" name="description" >{{ !empty(old('description')) ? old('description') :  @$model->description}}</textarea>
                                     </div>
+                                    @error('description')
+                                    <div class="col-red">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <label for="">Status Dompet</label>
                                 <div class="form-group form-float">
-                                    <select class="form-control show-tick" name="status_id">
+                                    <select class="form-control show-tick" name="status_id" value="{{old('status_id')}}">
                                         @foreach(\App\Helpers\SelectHelper::getCategoryStatus() as $data)
-                                        <option @if(@$model->wallet_status_id == $data->id) selected @endif value="{{$data->id}}">{{$data->name}}</option>
+                                        <option @if(@$model->wallet_status_id == $data->id || @old('status_id') == $data->id) selected @endif value="{{$data->id}}">{{$data->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -59,7 +65,17 @@
 </div>
 @push('customJS')
 <script>
-
+$('#categoryForm').validate({
+    rules: {
+        name: {
+            required: true,
+            minlength: 5
+        },
+        description: {
+            maxlength: 100
+        }
+    }
+});
 </script>
 @endpush
 @endsection

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Utils\Constant;
 use Illuminate\Http\Request;
 use DataTables;
+use Validator;
 
 class CategoryController extends Controller
 {
@@ -53,7 +54,11 @@ class CategoryController extends Controller
      */
     public function save(Request $request)
     {
-        
+        $validation = Validator::make($request->all(),Category::FORM_VALIDATION,Category::VALIDATION_MESAGE);
+        if($validation->fails()) {
+            return redirect()->route('masterData.category.add')->withErrors($validation)->withInput();
+        }
+
         if($request->has('id') && !empty($request->id)) {
             $category = Category::find($request->id);
         } else {

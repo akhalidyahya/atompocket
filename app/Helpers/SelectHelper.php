@@ -14,7 +14,7 @@ class SelectHelper {
      * @return WalletStatus
      */
     public static function getWalletStatus() {
-        return WalletStatus::all();
+        return WalletStatus::orderBy('name','asc')->get();
     }
 
     /**
@@ -22,7 +22,7 @@ class SelectHelper {
      * @return CategoryStatus
      */
     public static function getCategoryStatus() {
-        return CategoryStatus::all();
+        return CategoryStatus::orderBy('name','asc')->get();
     }
 
     /**
